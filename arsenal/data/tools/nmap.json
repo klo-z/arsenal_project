@@ -1,0 +1,151 @@
+{
+  "name": "Nmap",
+  "package": "nmap",
+  "binary": "nmap",
+  "commands": [
+    {
+      "id": "ping_scan",
+      "label": "Ping Scan (Host Discovery)",
+      "cmd_template": ["nmap", "-sn", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP / CIDR",
+          "type": "ip",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "stealth_scan",
+      "label": "Stealth SYN Scan (Top 1000 Ports)",
+      "cmd_template": ["nmap", "-sS", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP",
+          "type": "ip",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "intense_scan",
+      "label": "Intense Scan (All TCP Ports, OS & Version Detection)",
+      "cmd_template": ["nmap", "-p-", "-T4", "-A", "-v", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP",
+          "type": "ip",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "udp_scan",
+      "label": "UDP Scan (Top 1000 Ports)",
+      "cmd_template": ["nmap", "-sU", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP",
+          "type": "ip",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "service_version_detection",
+      "label": "Service & Version Detection",
+      "cmd_template": ["nmap", "-sV", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP",
+          "type": "ip",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "os_detection",
+      "label": "OS Detection",
+      "cmd_template": ["nmap", "-O", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP",
+          "type": "ip",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "script_scan_vuln",
+      "label": "Script Scan (Vuln)",
+      "cmd_template": ["nmap", "-sV", "-script", "vuln", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP",
+          "type": "ip",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "fast_scan",
+      "label": "Fast Scan (Top 100 Ports)",
+      "cmd_template": ["nmap", "-F", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP",
+          "type": "ip",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "specific_ports",
+      "label": "Scan Specific Ports",
+      "cmd_template": ["nmap", "-p", "{ports}", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP",
+          "type": "ip",
+          "required": true
+        },
+        {
+          "name": "ports",
+          "prompt": "Enter Ports (e.g., 80,443,8080)",
+          "type": "portlist",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "output_all_formats",
+      "label": "Scan & Output to All Formats",
+      "cmd_template": ["nmap", "-oA", "{output_file}", "{target}"],
+      "inputs": [
+        {
+          "name": "target",
+          "prompt": "Enter Target IP",
+          "type": "ip",
+          "required": true
+        },
+        {
+          "name": "output_file",
+          "prompt": "Enter Output File Name (no extension)",
+          "type": "path",
+          "required": true,
+          "default": "nmap_scan"
+        }
+      ]
+    }
+  ]
+}
+

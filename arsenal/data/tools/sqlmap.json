@@ -1,0 +1,187 @@
+{
+  "name": "SQLMap",
+  "package": "sqlmap",
+  "binary": "sqlmap",
+  "commands": [
+    {
+      "id": "basic_scan",
+      "label": "Basic Scan on a URL",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL (e.g., http://testphp.vulnweb.com/artists.php?artist=1)",
+          "type": "url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "list_dbs",
+      "label": "List Databases",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "--dbs", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "list_tables",
+      "label": "List Tables in a Database",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "-D", "{database}", "--tables", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "database",
+          "prompt": "Enter Database Name",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "list_columns",
+      "label": "List Columns in a Table",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "-D", "{database}", "-T", "{table}", "--columns", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "database",
+          "prompt": "Enter Database Name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "table",
+          "prompt": "Enter Table Name",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "dump_table",
+      "label": "Dump All Data from a Table",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "-D", "{database}", "-T", "{table}", "--dump", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "database",
+          "prompt": "Enter Database Name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "table",
+          "prompt": "Enter Table Name",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "crawl_site",
+      "label": "Crawl a Site for potential targets",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "--crawl=3", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Starting URL to Crawl",
+          "type": "url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "post_request",
+      "label": "Test a POST Request",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "--data={post_data}", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL (form action)",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "post_data",
+          "prompt": "Enter POST data (e.g., 'uname=test&pass=test')",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "cookie_injection",
+      "label": "Test with a Cookie",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "--cookie={cookie_data}", "--level=2", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "cookie_data",
+          "prompt": "Enter Cookie data (e.g., 'id=1;user=admin')",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "user_agent",
+      "label": "Test with a Custom User-Agent",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "--user-agent='{user_agent}'", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "user_agent",
+          "prompt": "Enter User-Agent string",
+          "type": "string",
+          "required": true,
+          "default": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+      ]
+    },
+    {
+      "id": "dump_all",
+      "label": "Dump Everything from All Databases",
+      "cmd_template": ["sqlmap", "-u", "{target_url}", "--dump-all", "--batch"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
+

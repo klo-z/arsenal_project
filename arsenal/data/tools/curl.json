@@ -1,0 +1,113 @@
+{
+  "name": "curl",
+  "package": "curl",
+  "binary": "curl",
+  "commands": [
+    {
+      "id": "get_request",
+      "label": "Simple GET Request",
+      "cmd_template": ["curl", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the full URL", "type": "url", "required": true}
+      ]
+    },
+    {
+      "id": "show_headers",
+      "label": "Show Response Headers (-i)",
+      "cmd_template": ["curl", "-i", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the full URL", "type": "url", "required": true}
+      ]
+    },
+    {
+      "id": "verbose_output",
+      "label": "Verbose Output (-v)",
+      "cmd_template": ["curl", "-v", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the full URL", "type": "url", "required": true}
+      ]
+    },
+    {
+      "id": "download_file",
+      "label": "Download a File (-O)",
+      "cmd_template": ["curl", "-O", "{file_url}"],
+      "inputs": [
+        {"name": "file_url", "prompt": "Enter the direct URL to the file", "type": "url", "required": true}
+      ]
+    },
+    {
+      "id": "download_file_rename",
+      "label": "Download and Rename a File (-o)",
+      "cmd_template": ["curl", "-o", "{local_filename}", "{file_url}"],
+      "inputs": [
+        {"name": "file_url", "prompt": "Enter the direct URL to the file", "type": "url", "required": true},
+        {"name": "local_filename", "prompt": "Enter the local name to save the file as", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "post_request",
+      "label": "POST Request with Data (-d)",
+      "cmd_template": ["curl", "-X", "POST", "-d", "{post_data}", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the target URL", "type": "url", "required": true},
+        {"name": "post_data", "prompt": "Enter POST data (e.g., 'user=test&pass=123')", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "post_json",
+      "label": "POST JSON Data",
+      "cmd_template": ["curl", "-X", "POST", "-H", "Content-Type: application/json", "-d", "{json_data}", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the target URL", "type": "url", "required": true},
+        {"name": "json_data", "prompt": "Enter JSON data (e.g., '{\"key\":\"value\"}')", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "custom_header",
+      "label": "Send a Custom Header (-H)",
+      "cmd_template": ["curl", "-H", "{header}", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the target URL", "type": "url", "required": true},
+        {"name": "header", "prompt": "Enter the full header (e.g., 'Authorization: Bearer token')", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "custom_user_agent",
+      "label": "Set a Custom User-Agent (-A)",
+      "cmd_template": ["curl", "-A", "{user_agent}", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the target URL", "type": "url", "required": true},
+        {"name": "user_agent", "prompt": "Enter the User-Agent string", "type": "string", "required": true, "default": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
+      ]
+    },
+    {
+      "id": "follow_redirects",
+      "label": "Follow Redirects (-L)",
+      "cmd_template": ["curl", "-L", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the URL (with potential redirects)", "type": "url", "required": true}
+      ]
+    },
+    {
+      "id": "use_proxy",
+      "label": "Use a Proxy (-x)",
+      "cmd_template": ["curl", "-x", "{proxy_protocol}://{proxy_host}:{proxy_port}", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the target URL", "type": "url", "required": true},
+        {"name": "proxy_protocol", "prompt": "Enter proxy protocol (http, https, socks5)", "type": "choice", "required": true, "default": "http"},
+        {"name": "proxy_host", "prompt": "Enter proxy host", "type": "ip", "required": true, "default": "127.0.0.1"},
+        {"name": "proxy_port", "prompt": "Enter proxy port", "type": "int", "required": true, "default": "8080"}
+      ]
+    },
+    {
+      "id": "http_auth",
+      "label": "HTTP Basic Authentication (-u)",
+      "cmd_template": ["curl", "-u", "{username}:{password}", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter the target URL", "type": "url", "required": true},
+        {"name": "username", "prompt": "Enter Username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter Password", "type": "string", "required": true}
+      ]
+    }
+  ]
+}

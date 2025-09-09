@@ -1,0 +1,108 @@
+{
+  "name": "Aircrack-ng Suite",
+  "package": "aircrack-ng",
+  "binary": "aircrack-ng",
+  "commands": [
+    {
+      "id": "start_monitor",
+      "label": "Start Monitor Mode on Interface",
+      "cmd_template": ["airmon-ng", "start", "{interface}"],
+      "inputs": [
+        {"name": "interface", "prompt": "Enter wireless interface (e.g., wlan0)", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "stop_monitor",
+      "label": "Stop Monitor Mode on Interface",
+      "cmd_template": ["airmon-ng", "stop", "{interface}"],
+      "inputs": [
+        {"name": "interface", "prompt": "Enter monitor interface (e.g., wlan0mon)", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "discover_networks",
+      "label": "Discover Wireless Networks (airodump)",
+      "cmd_template": ["airodump-ng", "{interface}"],
+      "inputs": [
+        {"name": "interface", "prompt": "Enter monitor interface", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "target_ap_capture",
+      "label": "Capture Packets from Target AP",
+      "cmd_template": ["airodump-ng", "--bssid", "{bssid}", "--channel", "{channel}", "-w", "{outfile}", "{interface}"],
+      "inputs": [
+        {"name": "interface", "prompt": "Enter monitor interface", "type": "string", "required": true},
+        {"name": "bssid", "prompt": "Enter target AP BSSID (MAC Address)", "type": "mac", "required": true},
+        {"name": "channel", "prompt": "Enter target AP channel", "type": "int", "required": true},
+        {"name": "outfile", "prompt": "Enter output file prefix", "type": "path", "required": true, "default": "capture"}
+      ]
+    },
+    {
+      "id": "deauth_broadcast",
+      "label": "Deauthentication Attack (Broadcast)",
+      "cmd_template": ["aireplay-ng", "--deauth", "0", "-a", "{bssid}", "{interface}"],
+      "inputs": [
+        {"name": "interface", "prompt": "Enter monitor interface", "type": "string", "required": true},
+        {"name": "bssid", "prompt": "Enter target AP BSSID", "type": "mac", "required": true}
+      ]
+    },
+    {
+      "id": "deauth_targeted",
+      "label": "Deauthentication Attack (Targeted Client)",
+      "cmd_template": ["aireplay-ng", "--deauth", "10", "-a", "{bssid}", "-c", "{client_mac}", "{interface}"],
+      "inputs": [
+        {"name": "interface", "prompt": "Enter monitor interface", "type": "string", "required": true},
+        {"name": "bssid", "prompt": "Enter target AP BSSID", "type": "mac", "required": true},
+        {"name": "client_mac", "prompt": "Enter target client MAC Address", "type": "mac", "required": true}
+      ]
+    },
+    {
+      "id": "wep_crack",
+      "label": "Crack WEP Password from Capture",
+      "cmd_template": ["aircrack-ng", "{capture_file}"],
+      "inputs": [
+        {"name": "capture_file", "prompt": "Enter path to .cap capture file", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "wpa_crack",
+      "label": "Crack WPA/WPA2 Password with Wordlist",
+      "cmd_template": ["aircrack-ng", "-w", "{wordlist}", "-b", "{bssid}", "{capture_file}"],
+      "inputs": [
+        {"name": "bssid", "prompt": "Enter target AP BSSID", "type": "mac", "required": true},
+        {"name": "capture_file", "prompt": "Enter path to .cap file with handshake", "type": "path", "required": true},
+        {"name": "wordlist", "prompt": "Enter path to wordlist", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "wps_pixie_dust",
+      "label": "WPS Pixie-Dust Attack (Reaver)",
+      "cmd_template": ["reaver", "-i", "{interface}", "-b", "{bssid}", "-K", "1", "-vv"],
+      "inputs": [
+        {"name": "interface", "prompt": "Enter monitor interface", "type": "string", "required": true},
+        {"name": "bssid", "prompt": "Enter target AP BSSID with WPS enabled", "type": "mac", "required": true}
+      ]
+    },
+    {
+      "id": "arp_replay",
+      "label": "WEP ARP Replay Attack (Generate IVs)",
+      "cmd_template": ["aireplay-ng", "-3", "-b", "{bssid}", "-h", "{client_mac}", "{interface}"],
+      "inputs": [
+        {"name": "interface", "prompt": "Enter monitor interface", "type": "string", "required": true},
+        {"name": "bssid", "prompt": "Enter target AP BSSID", "type": "mac", "required": true},
+        {"name": "client_mac", "prompt": "Enter a connected client's MAC Address", "type": "mac", "required": true}
+      ]
+    },
+    {
+      "id": "create_fake_ap",
+      "label": "Create a Fake AP (airbase-ng)",
+      "cmd_template": ["airbase-ng", "-e", "{essid}", "-c", "{channel}", "{interface}"],
+      "inputs": [
+        {"name": "interface", "prompt": "Enter monitor interface", "type": "string", "required": true},
+        {"name": "essid", "prompt": "Enter ESSID (name) for the fake AP", "type": "string", "required": true, "default": "Free-WiFi"},
+        {"name": "channel", "prompt": "Enter channel for the fake AP", "type": "int", "required": true, "default": "6"}
+      ]
+    }
+  ]
+}

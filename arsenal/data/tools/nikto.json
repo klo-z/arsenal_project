@@ -1,0 +1,103 @@
+{
+  "name": "Nikto Web Scanner",
+  "package": "nikto",
+  "binary": "nikto",
+  "commands": [
+    {
+      "id": "basic_scan",
+      "label": "Basic Scan on Port 80",
+      "cmd_template": ["nikto", "-h", "{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target host (IP or domain)", "type": "ip", "required": true}
+      ]
+    },
+    {
+      "id": "ssl_scan",
+      "label": "Scan with SSL on Port 443",
+      "cmd_template": ["nikto", "-h", "{target}", "-ssl"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target host (IP or domain)", "type": "ip", "required": true}
+      ]
+    },
+    {
+      "id": "specific_port",
+      "label": "Scan a Specific Port",
+      "cmd_template": ["nikto", "-h", "{target}", "-p", "{port}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target host", "type": "ip", "required": true},
+        {"name": "port", "prompt": "Enter port number", "type": "int", "required": true}
+      ]
+    },
+    {
+      "id": "multiple_ports",
+      "label": "Scan Multiple Ports",
+      "cmd_template": ["nikto", "-h", "{target}", "-p", "{ports}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target host", "type": "ip", "required": true},
+        {"name": "ports", "prompt": "Enter ports (comma-separated, e.g., 80,443,8080)", "type": "portlist", "required": true}
+      ]
+    },
+    {
+      "id": "output_file",
+      "label": "Scan and Output to File",
+      "cmd_template": ["nikto", "-h", "{target}", "-o", "{outfile}", "-F", "{format}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target host", "type": "ip", "required": true},
+        {"name": "outfile", "prompt": "Enter output filename", "type": "path", "required": true, "default": "scan_report.html"},
+        {"name": "format", "prompt": "Enter format (htm, csv, txt, xml)", "type": "choice", "required": true, "default": "htm"}
+      ]
+    },
+    {
+      "id": "use_proxy",
+      "label": "Scan using an HTTP Proxy",
+      "cmd_template": ["nikto", "-h", "{target}", "-useproxy", "http://{proxy_host}:{proxy_port}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target host", "type": "ip", "required": true},
+        {"name": "proxy_host", "prompt": "Enter proxy host", "type": "ip", "required": true, "default": "127.0.0.1"},
+        {"name": "proxy_port", "prompt": "Enter proxy port", "type": "int", "required": true, "default": "8080"}
+      ]
+    },
+    {
+      "id": "evasion_techniques",
+      "label": "Scan with Evasion Techniques",
+      "cmd_template": ["nikto", "-h", "{target}", "-evasion", "{technique}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target host", "type": "ip", "required": true},
+        {"name": "technique", "prompt": "Enter evasion technique number (1-8)", "type": "int", "required": true, "default": "1"}
+      ]
+    },
+    {
+      "id": "vulnerability_tuning",
+      "label": "Vulnerability Tuning (Scan for specific checks)",
+      "cmd_template": ["nikto", "-h", "{target}", "-Tuning", "{tuning_option}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target host", "type": "ip", "required": true},
+        {"name": "tuning_option", "prompt": "Enter tuning option (e.g., 1, 2, x)", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "scan_with_auth",
+      "label": "Scan with HTTP Authentication",
+      "cmd_template": ["nikto", "-h", "{target}", "-id", "{userid}:{password}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target host", "type": "ip", "required": true},
+        {"name": "userid", "prompt": "Enter User ID / Username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter Password", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "scan_from_file",
+      "label": "Scan a List of Hosts from a File",
+      "cmd_template": ["nikto", "-h", "{hostfile}"],
+      "inputs": [
+        {"name": "hostfile", "prompt": "Enter path to file with hosts", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "update_plugins",
+      "label": "Update Nikto Database and Plugins",
+      "cmd_template": ["nikto", "-update"],
+      "inputs": []
+    }
+  ]
+}

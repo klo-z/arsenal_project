@@ -1,0 +1,121 @@
+{
+  "name": "Hydra",
+  "package": "hydra",
+  "binary": "hydra",
+  "commands": [
+    {
+      "id": "ftp_brute",
+      "label": "FTP Brute-force (User & Pass List)",
+      "cmd_template": ["hydra", "-L", "{userlist}", "-P", "{passlist}", "ftp://{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "userlist", "prompt": "Path to user list", "type": "path", "required": true, "default": "/usr/share/wordlists/metasploit/unix_users.txt"},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "ssh_brute",
+      "label": "SSH Brute-force (User & Pass List)",
+      "cmd_template": ["hydra", "-L", "{userlist}", "-P", "{passlist}", "ssh://{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "userlist", "prompt": "Path to user list", "type": "path", "required": true, "default": "/usr/share/wordlists/metasploit/unix_users.txt"},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "smb_brute",
+      "label": "SMB (Windows Share) Brute-force",
+      "cmd_template": ["hydra", "-L", "{userlist}", "-P", "{passlist}", "smb://{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "userlist", "prompt": "Path to user list", "type": "path", "required": true, "default": "/usr/share/wordlists/metasploit/windows_users.txt"},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "rdp_brute",
+      "label": "RDP (Remote Desktop) Brute-force",
+      "cmd_template": ["hydra", "-L", "{userlist}", "-P", "{passlist}", "rdp://{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "userlist", "prompt": "Path to user list", "type": "path", "required": true, "default": "/usr/share/wordlists/metasploit/windows_users.txt"},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "telnet_brute",
+      "label": "Telnet Brute-force",
+      "cmd_template": ["hydra", "-L", "{userlist}", "-P", "{passlist}", "telnet://{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "userlist", "prompt": "Path to user list", "type": "path", "required": true, "default": "/usr/share/wordlists/metasploit/unix_users.txt"},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "pop3_brute",
+      "label": "POP3 Brute-force",
+      "cmd_template": ["hydra", "-L", "{userlist}", "-P", "{passlist}", "pop3://{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "userlist", "prompt": "Path to user list", "type": "path", "required": true, "default": "/usr/share/wordlists/metasploit/default_users_for_services.txt"},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "vnc_brute",
+      "label": "VNC Brute-force (Password Only)",
+      "cmd_template": ["hydra", "-P", "{passlist}", "vnc://{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "http_get_basic_auth",
+      "label": "HTTP GET Brute-force (Basic Auth)",
+      "cmd_template": ["hydra", "-L", "{userlist}", "-P", "{passlist}", "{target}", "http-get", "{path}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "path", "prompt": "Enter path to protected page (e.g., /admin)", "type": "string", "required": true, "default": "/"},
+        {"name": "userlist", "prompt": "Path to user list", "type": "path", "required": true, "default": "/usr/share/wordlists/metasploit/http_default_users.txt"},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "http_post_brute",
+      "label": "HTTP POST Form Brute-force",
+      "cmd_template": ["hydra", "-l", "{username}", "-P", "{passlist}", "{target}", "http-post-form", "{form_params}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "username", "prompt": "Enter the username to test", "type": "string", "required": true},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"},
+        {"name": "form_params", "prompt": "Enter form parameters (e.g., /login.php:user=^USER^&pass=^PASS^:F=Login Failed)", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "single_user_brute",
+      "label": "Single User Brute-force (e.g., Administrator)",
+      "cmd_template": ["hydra", "-l", "{username}", "-P", "{passlist}", "{service}://{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "service", "prompt": "Enter service (e.g., ftp, ssh, rdp, smb)", "type": "string", "required": true},
+        {"name": "username", "prompt": "Enter the single username to test", "type": "string", "required": true, "default": "admin"},
+        {"name": "passlist", "prompt": "Path to password list", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "single_pass_brute",
+      "label": "Single Password Brute-force (e.g., Summer2025)",
+      "cmd_template": ["hydra", "-L", "{userlist}", "-p", "{password}", "{service}://{target}"],
+      "inputs": [
+        {"name": "target", "prompt": "Enter target IP or hostname", "type": "ip", "required": true},
+        {"name": "service", "prompt": "Enter service (e.g., ftp, ssh, rdp, smb)", "type": "string", "required": true},
+        {"name": "userlist", "prompt": "Path to user list", "type": "path", "required": true, "default": "/usr/share/wordlists/metasploit/unix_users.txt"},
+        {"name": "password", "prompt": "Enter the single password to test", "type": "string", "required": true}
+      ]
+    }
+  ]
+}
+

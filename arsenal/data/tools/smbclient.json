@@ -1,0 +1,126 @@
+{
+  "name": "smbclient",
+  "package": "smbclient",
+  "binary": "smbclient",
+  "commands": [
+    {
+      "id": "list_shares_anon",
+      "label": "List Shares Anonymously",
+      "cmd_template": ["smbclient", "-L", "//{target_ip}", "-N"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP address", "type": "ip", "required": true}
+      ]
+    },
+    {
+      "id": "list_shares_auth",
+      "label": "List Shares with Authentication",
+      "cmd_template": ["smbclient", "-L", "//{target_ip}", "-U", "{username}%{password}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP address", "type": "ip", "required": true},
+        {"name": "username", "prompt": "Enter username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter password", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "connect_share_anon",
+      "label": "Connect to a Share Anonymously",
+      "cmd_template": ["smbclient", "//{target_ip}/{share_name}", "-N"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP address", "type": "ip", "required": true},
+        {"name": "share_name", "prompt": "Enter share name", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "connect_share_auth",
+      "label": "Connect to a Share with Authentication",
+      "cmd_template": ["smbclient", "//{target_ip}/{share_name}", "-U", "{username}%{password}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP address", "type": "ip", "required": true},
+        {"name": "share_name", "prompt": "Enter share name", "type": "string", "required": true},
+        {"name": "username", "prompt": "Enter username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter password", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "download_file",
+      "label": "Download a File from a Share",
+      "cmd_template": ["smbclient", "//{target_ip}/{share_name}", "-U", "{username}%{password}", "-c", "get {remote_file} {local_file}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP", "type": "ip", "required": true},
+        {"name": "share_name", "prompt": "Enter share name", "type": "string", "required": true},
+        {"name": "username", "prompt": "Enter username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter password", "type": "string", "required": true},
+        {"name": "remote_file", "prompt": "Enter remote filename to download", "type": "path", "required": true},
+        {"name": "local_file", "prompt": "Enter local filename to save as", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "upload_file",
+      "label": "Upload a File to a Share",
+      "cmd_template": ["smbclient", "//{target_ip}/{share_name}", "-U", "{username}%{password}", "-c", "put {local_file} {remote_file}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP", "type": "ip", "required": true},
+        {"name": "share_name", "prompt": "Enter share name", "type": "string", "required": true},
+        {"name": "username", "prompt": "Enter username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter password", "type": "string", "required": true},
+        {"name": "local_file", "prompt": "Enter local filename to upload", "type": "path", "required": true},
+        {"name": "remote_file", "prompt": "Enter remote filename to save as", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "download_directory",
+      "label": "Download a Directory Recursively",
+      "cmd_template": ["smbclient", "//{target_ip}/{share_name}", "-U", "{username}%{password}", "-c", "recurse; prompt; mget {remote_dir}"],
+       "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP", "type": "ip", "required": true},
+        {"name": "share_name", "prompt": "Enter share name", "type": "string", "required": true},
+        {"name": "username", "prompt": "Enter username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter password", "type": "string", "required": true},
+        {"name": "remote_dir", "prompt": "Enter remote directory name to download", "type": "path", "required": true}
+      ]
+    },
+     {
+      "id": "execute_command",
+      "label": "Execute a Command on the Share",
+      "cmd_template": ["smbclient", "//{target_ip}/{share_name}", "-U", "{username}%{password}", "-c", "{command}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP", "type": "ip", "required": true},
+        {"name": "share_name", "prompt": "Enter share name", "type": "string", "required": true},
+        {"name": "username", "prompt": "Enter username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter password", "type": "string", "required": true},
+        {"name": "command", "prompt": "Enter command to execute (e.g., 'ls', 'dir')", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "list_shares_domain",
+      "label": "List Shares with Domain User",
+      "cmd_template": ["smbclient", "-L", "//{target_ip}", "-W", "{domain}", "-U", "{username}%{password}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP", "type": "ip", "required": true},
+        {"name": "domain", "prompt": "Enter domain name", "type": "string", "required": true},
+        {"name": "username", "prompt": "Enter username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter password", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "connect_as_null_session",
+      "label": "Connect using Null Session (-U \"%\")",
+      "cmd_template": ["smbclient", "//{target_ip}/{share_name}", "-U", "%"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP address", "type": "ip", "required": true},
+        {"name": "share_name", "prompt": "Enter share name", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "connect_with_pass_the_hash",
+      "label": "Connect with Pass-the-Hash (NTLM)",
+      "cmd_template": ["smbclient", "//{target_ip}/{share_name}", "-U", "{username}", "--pw-nt-hash", "{ntlm_hash}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP address", "type": "ip", "required": true},
+        {"name": "share_name", "prompt": "Enter share name", "type": "string", "required": true},
+        {"name": "username", "prompt": "Enter username", "type": "string", "required": true},
+        {"name": "ntlm_hash", "prompt": "Enter NTLM hash", "type": "string", "required": true}
+      ]
+    }
+  ]
+}

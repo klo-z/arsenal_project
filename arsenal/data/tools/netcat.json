@@ -1,0 +1,106 @@
+{
+  "name": "Netcat",
+  "package": "netcat",
+  "binary": "nc",
+  "commands": [
+    {
+      "id": "tcp_port_scan",
+      "label": "TCP Port Scan (-z -v)",
+      "cmd_template": ["nc", "-z", "-v", "{target_ip}", "{port_range}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP address", "type": "ip", "required": true},
+        {"name": "port_range", "prompt": "Enter port or port range (e.g., 80 or 22-100)", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "udp_port_scan",
+      "label": "UDP Port Scan (-u -z -v)",
+      "cmd_template": ["nc", "-u", "-z", "-v", "{target_ip}", "{port_range}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP address", "type": "ip", "required": true},
+        {"name": "port_range", "prompt": "Enter port or port range (e.g., 53 or 161-162)", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "banner_grabbing",
+      "label": "Banner Grabbing",
+      "cmd_template": ["nc", "-v", "{target_ip}", "{port}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter target IP address", "type": "ip", "required": true},
+        {"name": "port", "prompt": "Enter a single port", "type": "int", "required": true}
+      ]
+    },
+    {
+      "id": "listen_mode",
+      "label": "Listen for a Connection (-l -v -p)",
+      "cmd_template": ["nc", "-l", "-v", "-p", "{port}"],
+      "inputs": [
+        {"name": "port", "prompt": "Enter the local port to listen on", "type": "int", "required": true}
+      ]
+    },
+    {
+      "id": "reverse_shell_listener",
+      "label": "Set up a Reverse Shell Listener",
+      "cmd_template": ["nc", "-l", "-v", "-n", "-p", "{port}"],
+      "inputs": [
+        {"name": "port", "prompt": "Enter the local port for the shell to connect to", "type": "int", "required": true}
+      ]
+    },
+    {
+      "id": "bind_shell_listener",
+      "label": "Set up a Bind Shell Listener",
+      "cmd_template": ["nc", "-l", "-v", "-p", "{port}", "-e", "/bin/bash"],
+      "inputs": [
+        {"name": "port", "prompt": "Enter the local port to listen on for a connection", "type": "int", "required": true}
+      ]
+    },
+    {
+      "id": "send_file",
+      "label": "Send a File",
+      "cmd_template": ["nc", "{target_ip}", "{port}", "<", "{filepath}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter the receiving host's IP address", "type": "ip", "required": true},
+        {"name": "port", "prompt": "Enter the receiving host's listening port", "type": "int", "required": true},
+        {"name": "filepath", "prompt": "Enter the path to the file you want to send", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "receive_file",
+      "label": "Receive a File",
+      "cmd_template": ["nc", "-l", "-p", "{port}", ">", "{filepath}"],
+      "inputs": [
+        {"name": "port", "prompt": "Enter the local port to listen on", "type": "int", "required": true},
+        {"name": "filepath", "prompt": "Enter the filename to save the received data as", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "simple_chat_listen",
+      "label": "Simple Chat (Listen Mode)",
+      "cmd_template": ["nc", "-l", "-p", "{port}"],
+      "inputs": [
+        {"name": "port", "prompt": "Enter the local port to listen on", "type": "int", "required": true}
+      ]
+    },
+    {
+      "id": "simple_chat_connect",
+      "label": "Simple Chat (Connect Mode)",
+      "cmd_template": ["nc", "{target_ip}", "{port}"],
+      "inputs": [
+        {"name": "target_ip", "prompt": "Enter the IP address of the listening chat host", "type": "ip", "required": true},
+        {"name": "port", "prompt": "Enter the port of the listening chat host", "type": "int", "required": true}
+      ]
+    },
+    {
+      "id": "connect_to_proxy",
+      "label": "Relay connection through a proxy",
+      "cmd_template": ["nc", "-X", "{proxy_protocol}", "-x", "{proxy_address}:{proxy_port}", "{target_ip}", "{target_port}"],
+      "inputs": [
+        {"name": "proxy_protocol", "prompt": "Enter proxy protocol (4 for SOCKS4, 5 for SOCKS5, connect for HTTPS)", "type": "choice", "required": true, "default": "5"},
+        {"name": "proxy_address", "prompt": "Enter proxy IP address", "type": "ip", "required": true, "default": "127.0.0.1"},
+        {"name": "proxy_port", "prompt": "Enter proxy port", "type": "int", "required": true, "default": "1080"},
+        {"name": "target_ip", "prompt": "Enter the final destination IP address", "type": "ip", "required": true},
+        {"name": "target_port", "prompt": "Enter the final destination port", "type": "int", "required": true}
+      ]
+    }
+  ]
+}

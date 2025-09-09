@@ -1,0 +1,170 @@
+{
+  "name": "GoBuster",
+  "package": "gobuster",
+  "binary": "gobuster",
+  "commands": [
+    {
+      "id": "dir_scan_common",
+      "label": "Directory Scan (Common Wordlist)",
+      "cmd_template": ["gobuster", "dir", "-u", "{target_url}", "-w", "/usr/share/wordlists/dirb/common.txt"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL (e.g., http://127.0.0.1)",
+          "type": "url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "dir_scan_medium",
+      "label": "Directory Scan (Medium Wordlist)",
+      "cmd_template": ["gobuster", "dir", "-u", "{target_url}", "-w", "/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "dir_scan_custom_wordlist",
+      "label": "Directory Scan (Custom Wordlist)",
+      "cmd_template": ["gobuster", "dir", "-u", "{target_url}", "-w", "{wordlist}"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "wordlist",
+          "prompt": "Enter Path to Wordlist",
+          "type": "path",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "file_extensions",
+      "label": "Directory Scan with File Extensions",
+      "cmd_template": ["gobuster", "dir", "-u", "{target_url}", "-w", "/usr/share/wordlists/dirb/common.txt", "-x", "{extensions}"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "extensions",
+          "prompt": "Enter File Extensions (e.g., php,txt,html)",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "dns_subdomain_scan",
+      "label": "DNS Subdomain Scan (Common Wordlist)",
+      "cmd_template": ["gobuster", "dns", "-d", "{target_domain}", "-w", "/usr/share/wordlists/dnsmap.txt"],
+      "inputs": [
+        {
+          "name": "target_domain",
+          "prompt": "Enter Target Domain (e.g., example.com)",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "dns_scan_custom_wordlist",
+      "label": "DNS Subdomain Scan (Custom Wordlist)",
+      "cmd_template": ["gobuster", "dns", "-d", "{target_domain}", "-w", "{wordlist}"],
+      "inputs": [
+        {
+          "name": "target_domain",
+          "prompt": "Enter Target Domain",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "wordlist",
+          "prompt": "Enter Path to Wordlist",
+          "type": "path",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "vhost_scan",
+      "label": "Virtual Host Scan",
+      "cmd_template": ["gobuster", "vhost", "-u", "{target_url}", "-w", "/usr/share/wordlists/dirb/common.txt"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "dir_scan_specific_status",
+      "label": "Directory Scan (Show Specific Status Codes)",
+      "cmd_template": ["gobuster", "dir", "-u", "{target_url}", "-w", "/usr/share/wordlists/dirb/common.txt", "-s", "{status_codes}"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "status_codes",
+          "prompt": "Enter Status Codes (e.g., 200,204,301)",
+          "type": "string",
+          "required": true,
+          "default": "200,204,301,302,307,401,403"
+        }
+      ]
+    },
+    {
+      "id": "dir_scan_no_tls_validation",
+      "label": "Directory Scan (No TLS/SSL Validation)",
+      "cmd_template": ["gobuster", "dir", "-u", "{target_url}", "-w", "/usr/share/wordlists/dirb/common.txt", "-k"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL (e.g., https://self-signed.badssl.com)",
+          "type": "url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "dir_scan_with_threads",
+      "label": "Directory Scan (Specify Threads)",
+      "cmd_template": ["gobuster", "dir", "-u", "{target_url}", "-w", "/usr/share/wordlists/dirb/common.txt", "-t", "{threads}"],
+      "inputs": [
+        {
+          "name": "target_url",
+          "prompt": "Enter Target URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "threads",
+          "prompt": "Enter Number of Threads",
+          "type": "int",
+          "required": true,
+          "default": "20"
+        }
+      ]
+    }
+  ]
+}
+

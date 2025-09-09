@@ -1,0 +1,101 @@
+{
+  "name": "John the Ripper",
+  "package": "john",
+  "binary": "john",
+  "commands": [
+    {
+      "id": "basic_crack_default",
+      "label": "Basic Crack (Default Wordlist & Rules)",
+      "cmd_template": ["john", "{hashfile}"],
+      "inputs": [
+        {"name": "hashfile", "prompt": "Enter path to the hash file", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "crack_wordlist",
+      "label": "Crack with Specific Wordlist",
+      "cmd_template": ["john", "--wordlist={wordlist}", "{hashfile}"],
+      "inputs": [
+        {"name": "hashfile", "prompt": "Enter path to the hash file", "type": "path", "required": true},
+        {"name": "wordlist", "prompt": "Enter path to the wordlist", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "single_crack_mode",
+      "label": "Single Crack Mode (Uses info from username)",
+      "cmd_template": ["john", "--single", "{hashfile}"],
+      "inputs": [
+        {"name": "hashfile", "prompt": "Enter path to the hash file (e.g., unshadowed passwd)", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "incremental_brute",
+      "label": "Incremental Mode (Brute-force)",
+      "cmd_template": ["john", "--incremental", "{hashfile}"],
+      "inputs": [
+        {"name": "hashfile", "prompt": "Enter path to the hash file", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "specify_format",
+      "label": "Specify Hash Format (e.g., md5, nt, sha256)",
+      "cmd_template": ["john", "--format={format}", "--wordlist={wordlist}", "{hashfile}"],
+      "inputs": [
+        {"name": "hashfile", "prompt": "Enter path to the hash file", "type": "path", "required": true},
+        {"name": "format", "prompt": "Enter hash format (e.g., raw-md5, nt, sha256crypt)", "type": "string", "required": true},
+        {"name": "wordlist", "prompt": "Enter path to the wordlist", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "use_rules",
+      "label": "Use Word Mangling Rules",
+      "cmd_template": ["john", "--wordlist={wordlist}", "--rules", "{hashfile}"],
+      "inputs": [
+        {"name": "hashfile", "prompt": "Enter path to the hash file", "type": "path", "required": true},
+        {"name": "wordlist", "prompt": "Enter path to the wordlist", "type": "path", "required": true, "default": "/usr/share/wordlists/rockyou.txt"}
+      ]
+    },
+    {
+      "id": "show_cracked",
+      "label": "Show Cracked Passwords for a File",
+      "cmd_template": ["john", "--show", "{hashfile}"],
+      "inputs": [
+        {"name": "hashfile", "prompt": "Enter path to the hash file", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "crack_zip",
+      "label": "Crack ZIP File Password",
+      "cmd_template": ["zip2john", "{zipfile}"],
+      "helper": "First, run 'zip2john {zipfile} > zip.hash'. Then, crack 'zip.hash' with another John command.",
+      "inputs": [
+        {"name": "zipfile", "prompt": "Enter path to the ZIP file", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "crack_rar",
+      "label": "Crack RAR File Password",
+      "cmd_template": ["rar2john", "{rarfile}"],
+      "helper": "First, run 'rar2john {rarfile} > rar.hash'. Then, crack 'rar.hash' with another John command.",
+      "inputs": [
+        {"name": "rarfile", "prompt": "Enter path to the RAR file", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "crack_keepass",
+      "label": "Crack KeePass Database (.kdbx)",
+      "cmd_template": ["keepass2john", "{keepassfile}"],
+      "helper": "First, run 'keepass2john {keepassfile} > keepass.hash'. Then, crack 'keepass.hash'.",
+      "inputs": [
+        {"name": "keepassfile", "prompt": "Enter path to the KeePass file", "type": "path", "required": true}
+      ]
+    },
+    {
+      "id": "unshadow_linux",
+      "label": "Prepare Linux Hashes (unshadow)",
+      "cmd_template": ["unshadow", "/etc/passwd", "/etc/shadow"],
+      "helper": "Run this command and redirect output to a file (e.g., 'unshadow ... > linux.hash'). Then crack the file.",
+      "inputs": []
+    }
+  ]
+}

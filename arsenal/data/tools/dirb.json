@@ -1,0 +1,104 @@
+{
+  "name": "Dirb Web Content Scanner",
+  "package": "dirb",
+  "binary": "dirb",
+  "commands": [
+    {
+      "id": "basic_scan",
+      "label": "Basic Scan with Default Wordlist",
+      "cmd_template": ["dirb", "{target_url}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL (e.g., http://127.0.0.1)", "type": "url", "required": true}
+      ]
+    },
+    {
+      "id": "custom_wordlist",
+      "label": "Scan with a Specific Wordlist",
+      "cmd_template": ["dirb", "{target_url}", "{wordlist}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true},
+        {"name": "wordlist", "prompt": "Enter path to wordlist", "type": "path", "required": true, "default": "/usr/share/wordlists/dirb/common.txt"}
+      ]
+    },
+    {
+      "id": "output_to_file",
+      "label": "Save Output to a File",
+      "cmd_template": ["dirb", "{target_url}", "-o", "{outfile}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true},
+        {"name": "outfile", "prompt": "Enter output filename", "type": "path", "required": true, "default": "dirb_results.txt"}
+      ]
+    },
+    {
+      "id": "recursive_scan",
+      "label": "Recursive Scan (scan found directories)",
+      "cmd_template": ["dirb", "{target_url}", "-r"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true}
+      ]
+    },
+    {
+      "id": "search_for_extensions",
+      "label": "Search for Specific File Extensions",
+      "cmd_template": ["dirb", "{target_url}", "-X", "{extensions}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true},
+        {"name": "extensions", "prompt": "Enter extensions (comma-separated, e.g., .php,.html)", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "ignore_response_codes",
+      "label": "Ignore Specific HTTP Response Codes",
+      "cmd_template": ["dirb", "{target_url}", "-N", "{codes}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true},
+        {"name": "codes", "prompt": "Enter codes to ignore (e.g., 301,404,403)", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "use_proxy",
+      "label": "Scan Through an HTTP Proxy",
+      "cmd_template": ["dirb", "{target_url}", "-p", "{proxy_host}:{proxy_port}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true},
+        {"name": "proxy_host", "prompt": "Enter proxy host", "type": "ip", "required": true, "default": "127.0.0.1"},
+        {"name": "proxy_port", "prompt": "Enter proxy port", "type": "int", "required": true, "default": "8080"}
+      ]
+    },
+    {
+      "id": "add_custom_header",
+      "label": "Add a Custom HTTP Header",
+      "cmd_template": ["dirb", "{target_url}", "-H", "{header}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true},
+        {"name": "header", "prompt": "Enter header (e.g., 'User-Agent: MyBrowser')", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "http_auth",
+      "label": "Scan with HTTP Authentication",
+      "cmd_template": ["dirb", "{target_url}", "-u", "{username}:{password}"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true},
+        {"name": "username", "prompt": "Enter Username", "type": "string", "required": true},
+        {"name": "password", "prompt": "Enter Password", "type": "string", "required": true}
+      ]
+    },
+    {
+      "id": "silent_mode",
+      "label": "Silent Mode (Don't show tested words)",
+      "cmd_template": ["dirb", "{target_url}", "-S"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true}
+      ]
+    },
+    {
+      "id": "verbose_display",
+      "label": "Verbose Display (Show more info)",
+      "cmd_template": ["dirb", "{target_url}", "-v"],
+      "inputs": [
+        {"name": "target_url", "prompt": "Enter target URL", "type": "url", "required": true}
+      ]
+    }
+  ]
+}
